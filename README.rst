@@ -13,6 +13,7 @@ Requirements
 - Lua 5.2, with headers
 - libusb, with headers
 - lupa, installed with the **--no-luajit** flag
+- subversion (do download CHDK)
 
 Currently chdkptp.py only works when the ``lupa`` package is linked to
 Lua. However, by default the package links to LuaJIT, so make sure that
@@ -21,6 +22,12 @@ It is best to do this via `pip`, **before** you install chdkptp.py::
 
     $ pip install lupa --install-option='--no-luajit'
 
+BUILDING
+========
+1. Get CHDK Revision:
+	run ./get_chdk.bash
+2. Get CHDK dependences:
+	cd chdkptp\vendor\chdkptp ; misc\setup-ext-libs.bash
 
 Documentation
 =============
