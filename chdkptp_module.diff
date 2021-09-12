@@ -1,13 +1,13 @@
-Common subdirectories: chdkptp-clean/chdk_headers and chdkptp/chdk_headers
-diff -u chdkptp-clean/chdkptp.c chdkptp/chdkptp.c
---- chdkptp-clean/chdkptp.c	2021-09-09 19:16:04.964211095 -0400
-+++ chdkptp/chdkptp.c	2021-09-09 19:24:02.668705181 -0400
+Common subdirectories: chdkptp/chdk_headers and chdkptp-upt/chdk_headers
+diff -u chdkptp/chdkptp.c chdkptp-upt/chdkptp.c
+--- chdkptp/chdkptp.c	2021-06-12 20:58:32.628701000 -0400
++++ chdkptp-upt/chdkptp.c	2021-09-10 15:33:22.956401185 -0400
 @@ -2658,7 +2658,13 @@
  };
  
  
 -static int chdkptp_registerlibs(lua_State *L) {
-+static int luaopen_chdkptp(lua_State *L) {
++int luaopen_chdkptp(lua_State *L) {
 +
 +	usb_init();
 +	luaopen_lfs(L);
@@ -32,9 +32,13 @@ diff -u chdkptp-clean/chdkptp.c chdkptp/chdkptp.c
  	int r=exec_lua_string(L,"require('main')");
  	uninit_gui_libs(L);
  	lua_close(L);
-diff -u chdkptp-clean/include.mk chdkptp/include.mk
---- chdkptp-clean/include.mk	2021-09-09 19:16:04.954211210 -0400
-+++ chdkptp/include.mk	2021-09-09 19:19:56.341542888 -0400
+Only in chdkptp-upt/: chdkptp.so
+Only in chdkptp-upt/: config.mk
+Only in chdkptp-upt/: .dep
+Only in chdkptp-upt/: extlibs
+diff -u chdkptp/include.mk chdkptp-upt/include.mk
+--- chdkptp/include.mk	2021-09-07 18:02:43.911264000 -0400
++++ chdkptp-upt/include.mk	2021-09-10 15:33:22.956401185 -0400
 @@ -32,7 +32,7 @@
  EXE_EXTRA=
  
@@ -44,19 +48,20 @@ diff -u chdkptp-clean/include.mk chdkptp/include.mk
  LDFLAGS=
  #LD=ld
  
-Common subdirectories: chdkptp-clean/lfs and chdkptp/lfs
-Common subdirectories: chdkptp-clean/lua and chdkptp/lua
-Common subdirectories: chdkptp-clean/lua-signal and chdkptp/lua-signal
-diff -u chdkptp-clean/Makefile chdkptp/Makefile
---- chdkptp-clean/Makefile	2021-09-09 19:16:04.974210980 -0400
-+++ chdkptp/Makefile	2021-09-09 19:18:49.122317721 -0400
-@@ -139,14 +139,18 @@
+Common subdirectories: chdkptp/lfs and chdkptp-upt/lfs
+Common subdirectories: chdkptp/lua and chdkptp-upt/lua
+Common subdirectories: chdkptp/lua-signal and chdkptp-upt/lua-signal
+diff -u chdkptp/Makefile chdkptp-upt/Makefile
+--- chdkptp/Makefile	2020-11-23 00:34:19.820041000 -0500
++++ chdkptp-upt/Makefile	2021-09-10 15:38:26.022798495 -0400
+@@ -139,14 +139,19 @@
  endif
  
  CHDKPTP_EXE=chdkptp$(EXE_EXTRA)$(EXE)
-+CHDKPTP_LIB=chdkptp$(EXE_EXTRA)$(LIB)
++CHDKPTP_LIB=chdkptp$(EXE_EXTRA)$(DLL)
  
  EXES=$(CHDKPTP_EXE)
++LIBS=$(CHDKPTP_LIB)
  
 -all: $(EXES)
 +all: $(EXES) $(LIBS)
@@ -70,4 +75,4 @@ diff -u chdkptp-clean/Makefile chdkptp/Makefile
  $(CHDKPTP_EXE): $(OBJS)
  	$(CC) -o $@ lfs/lfs.o $^ $(LDFLAGS)
  
-Common subdirectories: chdkptp-clean/misc and chdkptp/misc
+Common subdirectories: chdkptp/misc and chdkptp-upt/misc
